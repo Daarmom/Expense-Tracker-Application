@@ -1,0 +1,3 @@
+pandas
+PrettyTable
+pytest
