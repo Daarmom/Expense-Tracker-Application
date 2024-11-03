@@ -1,5 +1,6 @@
 # src/expense_tracker.py
 import csv
+import os
 from expense import Expense
 from category import Category
 from datetime import datetime, timedelta
@@ -13,20 +14,28 @@ class ExpenseTracker:
         self.category_id_counter = 1  # To give each new category a unique ID
 
     def load_expenses(self):
+        if not os.path.exists(self.data_file):
+            print(f"File '{self.data_file}' not found. Starting with an empty expense list.")
+            return
         try:
             with open(self.data_file, mode="r") as file:
                 reader = csv.reader(file)
                 for row in reader:
                     amount, date, category, description = row
                     self.expenses.append(Expense(float(amount), date, category, description))
-        except FileNotFoundError:
-            pass  # File will be created when an expense is added
+            print("Expenses loaded successfully!")
+        except Exception as e:
+            print(f"Error loading expenses: {e}")
 
     def save_expenses(self):
-        with open(self.data_file, mode="w", newline="") as file:
-            writer = csv.writer(file)
-            for expense in self.expenses:
-                writer.writerow([expense.amount, expense.date, expense.category, expense.description])
+        try:
+            with open(self.data_file, mode="w", newline="") as file:
+                writer = csv.writer(file)
+                for expense in self.expenses:
+                    writer.writerow([expense.amount, expense.date, expense.category, expense.description])
+                print("Expenses saved successfully!")
+        except Exception as e:
+            print(f"Error saving expenses: {e}")
 
     def add_expense(self, amount, date, category, description=""):
         new_expense = Expense(amount, date, category, description)
