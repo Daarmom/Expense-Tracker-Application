@@ -12,7 +12,8 @@ def display_menu():
     print("4. View all categories")
     print("5. Add a category")
     print("6. Filter expenses by category")
-    print("7. Exit")
+    print("7. Generate Report")
+    print("8. Exit")
     print("\nChoose an option:")
 
 def add_expense(expense_tracker):
@@ -50,12 +51,16 @@ def delete_expense(expense_tracker):
     except (ValueError, IndexError):
         print("Invalid index! Please enter a valid number.")
 
+def generate_report(expense_tracker):
+    period = input("Enter the period for the report (daily, weekly, monthly): ").lower()
+    expense_tracker.generate_report(period)
+
 def main():
     expense_tracker = ExpenseTracker()
 
     while True:
         display_menu()
-        choice = input("Select an option (1-7): ")
+        choice = input("Select an option (1-8): ")
 
         if choice == '1':
             # View all expenses
@@ -78,6 +83,9 @@ def main():
             # Filter expenses by category
             filter_expenses(expense_tracker)
         elif choice == '7':
+            # Filter expenses by category
+            generate_report(expense_tracker)
+        elif choice == '8':
             # Exit the application
             print("Exiting the Expense Tracker. Goodbye!")
             break

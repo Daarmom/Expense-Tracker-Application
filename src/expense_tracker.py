@@ -2,6 +2,7 @@
 import csv
 from expense import Expense
 from category import Category
+from datetime import datetime, timedelta
 
 class ExpenseTracker:
     def __init__(self, data_file="data/expenses.csv"):
@@ -60,3 +61,32 @@ class ExpenseTracker:
                 print(expense)
         else:
             print(f"No expenses found for category '{category_name}'")
+
+    # Report Generation - Calculate total expenses for a given period
+    def generate_report(self, period):
+        if period == 'daily':
+            report_date = datetime.today().date()
+        elif period == 'weekly':
+            report_date = datetime.today().date() - timedelta(days=7)
+        elif period == 'monthly':
+            report_date = datetime.today().replace(day=1).date()
+        else:
+            print("Invalid period! Choose from 'daily', 'weekly', or 'monthly'.")
+            return
+
+        # Filter and sum expenses within the specified period
+        total = 0
+        print(f"\nExpenses for the {period} report:")
+        for expense in self.expenses:
+            expense_date = datetime.strptime(expense.date, "%Y-%m-%d").date()
+            if period == 'daily' and expense_date == report_date:
+                print(expense)
+                total += expense.amount
+            elif period == 'weekly' and expense_date >= report_date:
+                print(expense)
+                total += expense.amount
+            elif period == 'monthly' and expense_date >= report_date:
+                print(expense)
+                total += expense.amount
+
+        print(f"\nTotal {period} expenses: ${total:.2f}")
