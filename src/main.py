@@ -9,7 +9,10 @@ def display_menu():
     print("1. View all expenses")
     print("2. Add an expense")
     print("3. Delete an expense")
-    print("4. Exit")
+    print("4. View all categories")
+    print("5. Add a category")
+    print("6. Filter expenses by category")
+    print("7. Exit")
     print("\nChoose an option:")
 
 def add_expense(expense_tracker):
@@ -17,14 +20,24 @@ def add_expense(expense_tracker):
         amount = float(input("Enter amount: "))
         date_input = input("Enter date (YYYY-MM-DD) or leave blank for today: ")
         date = date_input if date_input else datetime.date.today().isoformat()
-        category = input("Enter category: ")
+        
+        expense_tracker.view_categories()
+        category = input("Enter category name: ")
         description = input("Enter description (optional): ")
 
         # Add the expense to the tracker
         expense_tracker.add_expense(amount, date, category, description)
         print("Expense added successfully!")
     except ValueError:
-        print("Invalid input! Please enter numeric values for amount.")
+        print("Invalid input!")
+
+def add_category(expense_tracker):
+    name = input("Enter category name: ")
+    expense_tracker.add_category(name)
+
+def filter_expenses(expense_tracker):
+    category_name = input("Enter the category name to filter by: ")
+    expense_tracker.filter_expenses_by_category(category_name)
 
 def delete_expense(expense_tracker):
     try:
@@ -42,7 +55,7 @@ def main():
 
     while True:
         display_menu()
-        choice = input("Select an option (1-4): ")
+        choice = input("Select an option (1-7): ")
 
         if choice == '1':
             # View all expenses
@@ -55,6 +68,16 @@ def main():
             # Delete an expense
             delete_expense(expense_tracker)
         elif choice == '4':
+            # View all categories
+            print("\nCategories:")
+            expense_tracker.view_categories()
+        elif choice == '5':
+            # Add a new category
+            add_category(expense_tracker)
+        elif choice == '6':
+            # Filter expenses by category
+            filter_expenses(expense_tracker)
+        elif choice == '7':
             # Exit the application
             print("Exiting the Expense Tracker. Goodbye!")
             break
