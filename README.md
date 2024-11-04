@@ -3,6 +3,28 @@
 This is a Python-based expense tracker application designed to help users track their daily expenses.
 The app uses Object-Oriented Programming principles and CSV files for data storage.
 
+Setup Instructions
+Prerequisites
+Python 3.x is required to run this application. You can download it from python.org.
+A code editor (such as VS Code) or terminal for running Python scripts.
+
+Steps to Setup Locally:
+
+Clone the Repository
+» git clone <repository_url>
+» cd expense-tracker
+
+Install Required Packages If any dependencies are used, install them using requirements.txt:
+» pip install -r requirements.txt
+
+Run the Application
+» python src/main.py
+
+Setup CSV File (Optional)
+
+The application automatically creates data/expenses.csv if it does not exist.
+Ensure that data/ directory exists in the root project folder.
+
 1. Project Setup and Initial Development
 
 ● Set up the project repository on GitHub for version control.
